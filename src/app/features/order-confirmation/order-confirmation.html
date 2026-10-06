@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+
+<section class="confirmation-page">
+
+  <div class="confirmation-card">
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <h1>Order Placed Successfully!</h1>
+
+    <p class="thank-you">
+      Thank you for shopping with TextileMart.
+    </p>
+
+    <p class="order-number">
+      Order Number:
+      <strong>{{ orderNumber }}</strong>
+    </p>
+
+    <div class="confirmation-info">
+
+      <div>
+        <span>📦</span>
+        <div>
+          <strong>Order Confirmed</strong>
+          <p>Your order has been received successfully.</p>
+        </div>
+      </div>
+
+      <div>
+        <span>🚚</span>
+        <div>
+          <strong>Delivery</strong>
+          <p>Your order will be delivered to your address.</p>
+        </div>
+      </div>
+
+      <div>
+        <span>💳</span>
+        <div>
+          <strong>Payment</strong>
+          <p>Payment will be processed according to your selected method.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="confirmation-actions">
+
+      <a
+        routerLink="/products"
+        class="continue-button"
+      >
+        CONTINUE SHOPPING
+      </a>
+
+      <a
+        routerLink="/home"
+        class="home-button"
+      >
+        GO TO HOME
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

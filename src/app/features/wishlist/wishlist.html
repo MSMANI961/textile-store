@@ -1,0 +1,111 @@
+<app-navbar></app-navbar>
+
+<section class="wishlist-page">
+
+  <div class="page-header">
+    <p>TEXTILEMART</p>
+    <h1>My Wishlist</h1>
+    <span>
+      Your favourite products
+    </span>
+  </div>
+
+  @if (wishlistService.products().length > 0) {
+
+    <div class="wishlist-toolbar">
+      <span>
+        {{ wishlistService.count() }} Items
+      </span>
+
+      <button
+        (click)="clearWishlist()"
+      >
+        Clear Wishlist
+      </button>
+    </div>
+
+    <div class="wishlist-grid">
+
+      @for (
+        product of wishlistService.products();
+        track product.id
+      ) {
+
+        <div class="wishlist-card">
+
+          <div class="product-image">
+
+            <img
+              [src]="product.image"
+              [alt]="product.name"
+            >
+
+            <button
+              class="remove-button"
+              (click)="wishlistService.remove(product.id)"
+            >
+              ♥
+            </button>
+
+          </div>
+
+          <div class="product-info">
+
+            <small>
+              {{ product.category }}
+            </small>
+
+            <h3>
+              {{ product.name }}
+            </h3>
+
+            <div class="rating">
+              ⭐ {{ product.rating }}
+            </div>
+
+            <div class="price">
+              ₹{{ product.price }}
+            </div>
+
+            <a
+              [href]="'/product/' + product.id"
+              class="view-button"
+            >
+              View Product
+            </a>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <div class="empty-wishlist">
+
+      <div class="empty-icon">
+        ♡
+      </div>
+
+      <h2>
+        Your Wishlist is Empty
+      </h2>
+
+      <p>
+        Save your favourite products here.
+      </p>
+
+      <a routerLink="/products">
+        Explore Products
+      </a>
+
+    </div>
+
+  }
+
+</section>
+
+<app-footer></app-footer>

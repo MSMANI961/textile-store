@@ -1,0 +1,227 @@
+<nav class="top-nav" aria-label="Main navigation">
+  <div class="nav-brand">TEXTILEMART</div>
+</nav>
+
+<section class="checkout-page">
+
+  <div class="page-header">
+    <p>TEXTILEMART</p>
+    <h1>Checkout</h1>
+    <span>Complete your order</span>
+  </div>
+
+  @if (cartService.items().length > 0) {
+
+    <div class="checkout-layout">
+
+      <!-- DELIVERY FORM -->
+
+      <div class="checkout-form">
+
+        <h2>Delivery Information</h2>
+
+        <form (ngSubmit)="placeOrder()">
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>First Name</label>
+              <input
+                type="text"
+                placeholder="Enter first name"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                placeholder="Enter last name"
+                required
+              >
+            </div>
+
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Enter email"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Mobile Number</label>
+            <input
+              type="tel"
+              placeholder="Enter mobile number"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Address</label>
+            <textarea
+              rows="4"
+              placeholder="House no, street, area"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>City</label>
+              <input
+                type="text"
+                placeholder="City"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label>PIN Code</label>
+              <input
+                type="text"
+                placeholder="PIN code"
+                required
+              >
+            </div>
+
+          </div>
+
+          <!-- PAYMENT -->
+
+          <h2>Payment Method</h2>
+
+          <div class="payment-options">
+
+            <label class="payment-option">
+              <input
+                type="radio"
+                name="payment"
+                value="cod"
+                checked
+              >
+              <span>Cash on Delivery</span>
+            </label>
+
+            <label class="payment-option">
+              <input
+                type="radio"
+                name="payment"
+                value="upi"
+              >
+              <span>UPI</span>
+            </label>
+
+            <label class="payment-option">
+              <input
+                type="radio"
+                name="payment"
+                value="card"
+              >
+              <span>Credit / Debit Card</span>
+            </label>
+
+          </div>
+
+          <button
+            type="submit"
+            class="place-order-button"
+          >
+            PLACE ORDER
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- ORDER SUMMARY -->
+
+      <aside class="order-summary">
+
+        <h2>Your Order</h2>
+
+        @for (item of cartService.items(); track item.product.id) {
+
+          <div class="summary-item">
+
+            <img
+              [src]="item.product.image"
+              [alt]="item.product.name"
+            >
+
+            <div class="summary-product">
+
+              <strong>
+                {{ item.product.name }}
+              </strong>
+
+              <small>
+                Qty: {{ item.quantity }}
+              </small>
+
+            </div>
+
+            <span>
+              ₹{{ item.product.price * item.quantity }}
+            </span>
+
+          </div>
+
+        }
+
+        <hr>
+
+        <div class="summary-row">
+          <span>Total Items</span>
+          <span>{{ cartService.totalItems() }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹{{ cartService.subtotal() }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Delivery</span>
+          <span>FREE</span>
+        </div>
+
+        <div class="summary-total">
+          <strong>Total</strong>
+          <strong>₹{{ cartService.subtotal() }}</strong>
+        </div>
+
+      </aside>
+
+    </div>
+
+  } @else {
+
+    <!-- EMPTY CART -->
+
+    <div class="empty-checkout">
+
+      <h2>Your Cart is Empty</h2>
+
+      <p>
+        Add products before proceeding to checkout.
+      </p>
+
+      <a routerLink="/products">
+        Continue Shopping
+      </a>
+
+    </div>
+
+  }
+
+</section>
+
+<app-footer></app-footer>

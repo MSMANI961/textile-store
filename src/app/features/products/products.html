@@ -1,0 +1,116 @@
+<app-navbar></app-navbar>
+
+<section class="products-page">
+
+  <div class="page-header">
+    <p>TEXTILEMART COLLECTION</p>
+
+    <h1>Our Collection</h1>
+
+    <span>
+      Discover beautiful fashion for every occasion
+    </span>
+  </div>
+
+
+  <div class="shop-layout">
+
+    <!-- CATEGORY SIDEBAR -->
+
+    <aside class="sidebar">
+
+      <h3>Categories</h3>
+
+      @for (category of categories; track category) {
+
+        <button
+          [class.active]="selectedCategory === category"
+          (click)="filterProducts(category)"
+        >
+          {{ category }}
+        </button>
+
+      }
+
+    </aside>
+
+
+    <!-- PRODUCTS -->
+
+    <main class="product-section">
+
+      <div class="product-toolbar">
+
+        <span>
+          {{ products.length }} Products
+        </span>
+
+        <select>
+          <option>Sort: Popular</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+        </select>
+
+      </div>
+
+
+      <div class="product-grid">
+
+        @for (product of products; track product.id) {
+
+          <div class="product-card">
+
+            <div class="products-image">
+
+              <img
+                [src]="product.image"
+                [alt]="product.name"
+              >
+
+              <button class="wishlist">
+                ♡
+              </button>
+
+            </div>
+
+
+            <div class="product-info">
+
+              <small>
+                {{ product.category }}
+              </small>
+
+              <h3>
+                {{ product.name }}
+              </h3>
+
+              <div class="rating">
+                ⭐ {{ product.rating }}
+              </div>
+
+              <div class="price">
+                ₹{{ product.price }}
+              </div>
+
+              <button
+                class="view-button"
+                [routerLink]="['/product', product.id]"
+              >
+                View Product
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </main>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

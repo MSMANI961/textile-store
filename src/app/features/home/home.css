@@ -1,0 +1,97 @@
+.hero {
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  padding: 60px 8%;
+  background: linear-gradient(
+    120deg,
+    #fff5f8,
+    #f7f0ff
+  );
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.subtitle {
+  letter-spacing: 3px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: 64px;
+  line-height: 1.05;
+  margin: 20px 0;
+}
+
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.hero button,
+.product-card button {
+  margin-top: 20px;
+  padding: 14px 28px;
+  border: none;
+  background: #222;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.categories,
+.products {
+  padding: 70px 8%;
+}
+
+.categories h2,
+.products h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 40px;
+}
+
+.category-grid,
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+}
+
+.category {
+  padding: 35px 20px;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+
+.category-icon {
+  font-size: 55px;
+}
+
+.product-card {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+}
+
+.product-image {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7f7;
+  font-size: 80px;
+}
+
+.product-card h3 {
+  margin-top: 20px;
+}
+
+.product-card p {
+  font-size: 20px;
+  font-weight: 600;
+}

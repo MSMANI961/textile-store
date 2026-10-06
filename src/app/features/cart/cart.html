@@ -1,0 +1,152 @@
+<app-navbar></app-navbar>
+
+<section class="cart-page">
+
+  <div class="page-header">
+    <p>TEXTILEMART</p>
+    <h1>Shopping Cart</h1>
+  </div>
+
+  @if (cartService.items().length > 0) {
+
+    <div class="cart-layout">
+
+      <div class="cart-items">
+
+        @for (item of cartService.items(); track item.product.id) {
+
+          <div class="cart-item">
+
+            <img
+              [src]="item.product.image"
+              [alt]="item.product.name"
+            >
+
+            <div class="item-details">
+
+              <small>{{ item.product.category }}</small>
+
+              <h3>
+                {{ item.product.name }}
+              </h3>
+
+              <p class="price">
+                ₹{{ item.product.price }}
+              </p>
+
+              <div class="quantity-control">
+
+                <button
+                  (click)="decrease(item.product.id)"
+                >
+                  −
+                </button>
+
+                <span>
+                  {{ item.quantity }}
+                </span>
+
+                <button
+                  (click)="increase(item.product.id)"
+                >
+                  +
+                </button>
+
+              </div>
+
+            </div>
+
+            <div class="item-total">
+
+              <strong>
+                ₹{{ item.product.price * item.quantity }}
+              </strong>
+
+              <button
+                class="remove-button"
+                (click)="remove(item.product.id)"
+              >
+                Remove
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+        <button
+          class="clear-button"
+          (click)="clearCart()"
+        >
+          Clear Cart
+        </button>
+
+      </div>
+
+      <aside class="cart-summary">
+
+        <h2>Order Summary</h2>
+
+        <div class="summary-row">
+          <span>Total Items</span>
+          <span>
+            {{ cartService.totalItems() }}
+          </span>
+        </div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong>
+            ₹{{ cartService.subtotal() }}
+          </strong>
+        </div>
+
+        <div class="summary-row">
+          <span>Delivery</span>
+          <span>FREE</span>
+        </div>
+
+        <hr>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <strong>
+            ₹{{ cartService.subtotal() }}
+          </strong>
+        </div>
+
+       <button
+  class="checkout-button"
+  routerLink="/checkout"
+>
+  PROCEED TO CHECKOUT
+</button>
+
+      </aside>
+
+    </div>
+
+  } @else {
+
+    <div class="empty-cart">
+
+      <div class="empty-icon">🛒</div>
+
+      <h2>Your Cart is Empty</h2>
+
+      <p>
+        Looks like you haven't added anything to your cart yet.
+      </p>
+
+      <a routerLink="/products">
+        Continue Shopping
+      </a>
+
+    </div>
+
+  }
+
+</section>
+
+<app-footer></app-footer>

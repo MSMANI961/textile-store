@@ -1,0 +1,145 @@
+<app-navbar></app-navbar>
+
+@if (product) {
+
+  <section class="product-details">
+
+    <div class="product-image-section">
+
+      <img
+        [src]="product.image"
+        [alt]="product.name"
+      >
+
+    </div>
+
+
+    <div class="product-info">
+
+      <span class="category">
+        {{ product.category }}
+      </span>
+
+      <h1>
+        {{ product.name }}
+      </h1>
+
+      <div class="rating">
+        ⭐ {{ product.rating }} / 5
+      </div>
+
+      <div class="price">
+        ₹{{ product.price }}
+      </div>
+
+      <p class="description">
+        {{ product.description }}
+      </p>
+
+
+      <div class="stock">
+
+        @if (product.stock > 0) {
+          <span>✓ In Stock</span>
+        } @else {
+          <span>Out of Stock</span>
+        }
+
+      </div>
+
+
+      <div class="quantity-section">
+
+        <span>Quantity</span>
+
+        <div class="quantity-control">
+
+          <button
+            (click)="decreaseQuantity()"
+          >
+            −
+          </button>
+
+          <span>
+            {{ quantity }}
+          </span>
+
+          <button
+            (click)="increaseQuantity()"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="cart-button"
+          (click)="addToCart()"
+        >
+          🛒 ADD TO CART
+        </button>
+
+  <button
+  class="wishlist-button"
+  (click)="toggleWishlist()"
+>
+  {{ product && wishlistService.isWishlisted(product.id) ? '♥' : '♡' }}
+</button>
+
+      </div>
+
+
+      <div class="features">
+
+        <div>
+          🚚
+          <strong>Free Delivery</strong>
+          <small>On orders above ₹999</small>
+        </div>
+
+        <div>
+          ↩️
+          <strong>Easy Returns</strong>
+          <small>7 days return policy</small>
+        </div>
+
+        <div>
+          🔒
+          <strong>Secure Payment</strong>
+          <small>100% secure checkout</small>
+        </div>
+
+      </div>
+
+
+      <a
+        routerLink="/products"
+        class="back-link"
+      >
+        ← Continue Shopping
+      </a>
+
+    </div>
+
+  </section>
+
+} @else {
+
+  <section class="not-found">
+
+    <h2>Product Not Found</h2>
+
+    <a routerLink="/products">
+      Back to Products
+    </a>
+
+  </section>
+
+}
+
+<app-footer></app-footer>
