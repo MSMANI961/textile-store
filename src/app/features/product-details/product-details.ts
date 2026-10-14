@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink,Router } from '@angular/router';
+import { Component, OnInit,ChangeDetectorRef  } from '@angular/core';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 
 import { Product } from '../../core/models/product';
-import { PRODUCTS } from '../../core/data/products';
+import { ProductService } from '../../core/services/product.service';
 
 import { Navbar } from '../../shared/navbar/navbar';
 import { Footer } from '../../shared/footer/footer';
@@ -11,6 +11,7 @@ import { WishlistService } from '../../core/services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
+  standalone: true,
   imports: [
     RouterLink,
     Navbar,
@@ -19,27 +20,44 @@ import { WishlistService } from '../../core/services/wishlist.service';
   templateUrl: './product-details.html',
   styleUrl: './product-details.css'
 })
-export class ProductDetails {
+export class ProductDetails implements OnInit {
 
   product: Product | undefined;
 
   quantity = 1;
+  loading = true;
+  errorMessage = '';
 
   constructor(
-    private route: ActivatedRoute, 
-      private router: Router,
-    private cartService: CartService, 
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private router: Router,
+    private productService: ProductService,
+    private cartService: CartService,
     public wishlistService: WishlistService
-   
-    
-  ) {
-    const id = Number(
-      this.route.snapshot.paramMap.get('id')
-    );
+  ) {}
 
-    this.product = PRODUCTS.find(
-      product => product.id === id
-    );
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!Number.isInteger(id) || id <= 0) {
+      this.loading = false;
+      this.errorMessage = 'Invalid product ID.';
+      return;
+    }
+
+    this.productService.getProductById(id).subscribe({
+      next: (data) => {
+        this.product = data;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error loading product:', error);
+        this.errorMessage = 'Product not found or could not be loaded.';
+        this.loading = false;
+      }
+    });
   }
 
   increaseQuantity(): void {
@@ -54,22 +72,16 @@ export class ProductDetails {
     }
   }
 
-addToCart(): void {
-  if (this.product) {
-
-    this.cartService.addToCart(
-      this.product,
-      this.quantity
-    );
-
-    console.log('Product added to cart');
-
-    this.router.navigate(['/cart']);
+  addToCart(): void {
+    if (this.product) {
+      this.cartService.addToCart(this.product, this.quantity);
+      this.router.navigate(['/cart']);
+    }
   }
-}
-toggleWishlist(): void {
-  if (this.product) {
-    this.wishlistService.toggle(this.product);
+
+  toggleWishlist(): void {
+    if (this.product) {
+      this.wishlistService.toggle(this.product);
+    }
   }
-}
 }

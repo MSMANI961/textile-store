@@ -128,16 +128,20 @@
 
   </section>
 
-} @else {
+}@else if (!loading && errorMessage) {
 
   <section class="not-found">
-
-    <h2>Product Not Found</h2>
+    <h2>{{ errorMessage }}</h2>
 
     <a routerLink="/products">
       Back to Products
     </a>
+  </section>
 
+} @else if (loading) {
+
+  <section class="not-found">
+    <h2>Loading product...</h2>
   </section>
 
 }

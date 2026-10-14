@@ -72,52 +72,53 @@ export class CartService {
       return [];
     }
   }
+addToCart(
+  product: Product,
+  quantity: number = 1
+): void {
 
-  addToCart(
-    product: Product,
-    quantity: number = 1
-  ): void {
+  // Do not add products that are out of stock
+  if (product.stock <= 0 || quantity <= 0) {
+    return;
+  }
 
-    const currentItems = this.itemsSignal();
+  const currentItems = this.itemsSignal();
 
-    const existingItem = currentItems.find(
-      item => item.product.id === product.id
+  const existingItem = currentItems.find(
+    item => item.product.id === product.id
+  );
+
+  let updatedItems: CartItem[];
+
+  if (existingItem) {
+
+    updatedItems = currentItems.map(item =>
+      item.product.id === product.id
+        ? {
+            ...item,
+            quantity: Math.min(
+              item.quantity + quantity,
+              product.stock
+            )
+          }
+        : item
     );
 
-    let updatedItems: CartItem[];
+  } else {
 
-    if (existingItem) {
-
-      updatedItems = currentItems.map(item =>
-        item.product.id === product.id
-          ? {
-              ...item,
-              quantity: Math.min(
-                item.quantity + quantity,
-                product.stock
-              )
-            }
-          : item
-      );
-
-    } else {
-
-      updatedItems = [
-        ...currentItems,
-        {
-          product,
-          quantity: Math.min(
-            quantity,
-            product.stock
-          )
-        }
-      ];
-    }
-
-    this.itemsSignal.set(updatedItems);
-
-    this.saveCart(updatedItems);
+    updatedItems = [
+      ...currentItems,
+      {
+        product,
+        quantity: Math.min(quantity, product.stock)
+      }
+    ];
   }
+
+  this.itemsSignal.set(updatedItems);
+  this.saveCart(updatedItems);
+}
+
 
   increase(productId: number): void {
 
