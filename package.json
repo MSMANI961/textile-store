@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+   "build": "ng build && node -e \"const fs=require('fs');const p='dist/textile-store/browser/';if(!fs.existsSync(p+'index.html')&&fs.existsSync(p+'index.csr.html'))fs.copyFileSync(p+'index.csr.html',p+'index.html');\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:textile-store": "node dist/textile-store/server/server.mjs"
