@@ -12,7 +12,7 @@ export class ProductService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/api/products';
+  private apiUrl = 'https://textile-store-backend.onrender.com/api/products';
 
   // Get all products from the backend
   getAllProducts(): Observable<Product[]> {

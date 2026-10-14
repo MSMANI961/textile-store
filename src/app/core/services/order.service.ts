@@ -25,7 +25,7 @@ export class OrderService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/api/orders';
+  private apiUrl = 'https://textile-store-backend.onrender.com/api/orders';
 
   createOrder(order: CustomerOrder): Observable<CustomerOrder> {
     return this.http.post<CustomerOrder>(
